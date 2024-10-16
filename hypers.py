@@ -69,9 +69,7 @@ def get_suggestions(trial: Trial):
 
     ## REPULSION
     repulsion = trial.suggest_categorical("repulsion", repulsions)
-    if repulsion == "None":
-        params["model"]["empirical_corrections"] = None
-    else:
+    if repulsion != "None":
         rep_r_max = trial.suggest_float("rep_r_max", 0.5, 2.5)
         params["model"]["empirical_corrections"] = [{"name": repulsion, "r_max": rep_r_max}]
 
@@ -163,7 +161,7 @@ def run_and_eval(parameters):
 def objective_fn(trial):
     name = uuid.uuid4()
     name = str(name)
-    path = Path("hyperopt_template.yaml")
+    path = Path("train_template.yaml")
     sugg_params = get_suggestions(trial)
     params = load_and_update_config(path, sugg_params, name)
     loss = run_and_eval(params)

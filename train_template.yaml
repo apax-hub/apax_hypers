@@ -34,6 +34,9 @@ model:
   descriptor_dtype: fp32
   readout_dtype: fp32
 
+optimizer:
+  name: adam
+
 callbacks:
 - name: csv
 # - name: tensorboard # advised to use either TB or mlflow
