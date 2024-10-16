@@ -1,0 +1,42 @@
+n_epochs: 5000
+n_jitted_steps: 1
+patience: 500
+
+data:
+  directory: STUDY_DIR
+  train_data_path: PATH
+  val_data_path: PATH
+
+  batch_size: 1
+  valid_batch_size: 50
+
+metrics:
+  - name: energy
+    reductions: [mae]
+  - name: forces
+    reductions: [mae]
+
+loss:
+  - name: energy
+    loss_type: mse
+    atoms_exponent: 1
+  - name: forces
+    loss_type: mse
+    weight: 1.0
+    atoms_exponent: 1
+
+model:
+  calc_stress: false
+  use_ntk: false
+  b_init: zeros
+  w_init: lecun
+  scale_shift_dtype: fp32
+  descriptor_dtype: fp32
+  readout_dtype: fp32
+
+callbacks:
+- name: csv
+# - name: tensorboard # advised to use either TB or mlflow
+
+checkpoints:
+  ckpt_interval: 500
